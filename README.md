@@ -1,78 +1,31 @@
-# Boilerplate Instructions
+# _Better Doctor Search_
 
-## Initial set up of Boilerplate
+#### _A website that allows you to search for doctors_
 
-### Rename root directory, and files in js and spec.
+#### By _**Jesse Bryan**_
 
-`mv javascript-boilerplate your-project-name`
+## Description
 
-etc
+_User can enter information such as location, symptoms, or doctor name to get a list of doctors relating to those fields. All doctors will have information such as where they practice, phone numbers to that practice, and whether or not they are accepting new patients._
 
-### Commands to run after cloning locally
+## Setup/Installation Requirements
 
-#### Install `npm` and `bower` dependencies after cloning
+* _after cloning the repo use type "npm install" and "bower install" into your terminal. You will need a valid API_KEY for Better Doctor API. To get one go to https://developer.betterdoctor.com/. You must also have NodeJS installed._
 
-```
-npm install
-```
-```
-bower install
-```
-```
-gulp build
-```
+## Known Bugs
 
-## Blank fields to fill through Boilerplate
+_There are currently no known bugs in this program._
 
-### index.html
+## Support and contact details
 
-- `TitleOfSite`
+_For questions, please contact Jesse Bryan at jesse.bryan22@gmail.com_
 
-```
-<script src="bower_components/moment/min/moment.min.js"></script>
-<title>TitleOfSite</title>
-</head>
-```
+## Technologies Used
 
-### object_name.js
+_This app is programmed using HTML, CSS, javascript, NodeJS, and Bootstrap._
 
-- Change the `object_name.js` file name to the name of the object_name.
+### License
 
-- `ObjectName` - name of object_name
-- `propertyInput` - name of parameter being passed into the constructor when instantiated.
-- `this.property` - name of property
-- `MethodName` - name of method
-- `InputParameter` - ***optional***
-- `object`Module - name of object placed before "Module"
+*All rights reserved. Version 1.0.*
 
-
-### object-name-interface.js
-
-
-- Change the `object_name-interface.js` file name to the name of the object_name and end with `-interface`.
-
-- `ObjectName` - name of object_name
-- `object_name.js` - name of object file
-- `object`Module - name of object placed before "Module"
-- `#name-of-form` - name of form id referenced in `index.html`
-- `nameOfField` - variable name referencing field value
-- `#field-id` - name of field id referenced in `index.html`
-- `newObject` - variable name referencing creating a new object from constructor
-- `propertyInput` - name of parameter being passed into the constructor when instantiated.
-- `InputParameter` - ***optional***
-
-
-```
-var ObjectName = require('./../js/object_name.js').objectModule;
-
-$(function() {
-  $('#name-of-form').submit(function(event) {
-    event.preventDefault();
-    var nameOfField = $('#field-id').val();
-    var newObject = new ObjectName(propertyInput);
-    var output = newObject.methodName(InputParameter);
-    output.forEach(function(element) {
-      $('#solution').append("<li>" + element + "</li>");
-    });
-  });
-  ```
+Copyright (c) 2017 **_Jesse Bryan_**
