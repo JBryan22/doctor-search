@@ -5,12 +5,14 @@
 .doctor-info-container {
   border: 1px solid black;
   background-color: #efefef;
+  margin: 10px 0;
 }
 
 .doc-name {
   font-weight: bold;
   font-size: 1.5em;
   text-align: center;
+  margin-top: 15px;
 }
 
 .special {
@@ -25,15 +27,46 @@
   font-weight: bold;
 }
 
-.details {
+.middle, .right {
   display: inline-block;
+  vertical-align: top;
+}
+
+
+
+.middle {
+  margin: 0 25px;
+  width:50%;
 }
 
 img {
-  display: inline-block;
   border-radius: 50%;
+  margin-left: 15px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+.image-container {
+  width:13%;
+  display: inline-block;
 }
 
 .additional {
   color:green;
+}
+
+.additional:hover {
+  text-decoration: underline;
+  cursor:pointer;
+}
+
+.first-address, .address-container {
+  display: inline-block;
+  width:66%;
+  text-align: center;
+  margin-top:15px;
+}
+
+.first-address, .address-container {
+  vertical-align: top;
 }

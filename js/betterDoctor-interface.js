@@ -7,7 +7,9 @@ let outputDoctors = function(doctorList) {
     $(".output").append(`<div class="doctor-info-container">
                         <p class="doc-name">${doctor.firstName} ${doctor.lastName}, ${doctor.title}</p>
                         <p class="special"></span> ${outputSpecialties(doctor.specialties)}</p>
-                        <img src=${doctor.image}>
+                        <div class="image-container">
+                          <img src=${doctor.image}>
+                        </div>
 
                         ${outputAddresses(doctor.addresses)}
                         </div>`);
@@ -29,24 +31,32 @@ let outputSpecialties = function(specialties) {
 
 let outputAddresses = function(addresses) {
   let returnStr = "<div class=first-address>" +
+                    "<div class='middle'>" +
                     "<p class='details'><span class='title'>Practice name:</span> " + addresses[0].name + "</p>" +
                     "<p class='details'><span class='title'>Phone:</span> " + addresses[0].phone + "</p>" +
                     (addresses[0].website ? ("<p><a href='" + addresses[0].website + "'>" + addresses[0].website + "</a></p>") : "") +
                     "<p class='details'><span class='title'>Accepting New Patients:</span> " + (addresses[0].accepting ? "Yes" : "No") + "</p>" +
+                    "</div>" +
+                    "<div class='right'>" +
                     "<p>" + addresses[0].street + "</p>" +
                     "<p>" + addresses[0].city + ", " + addresses[0].state + " " + addresses[0].zip + "</p>" +
                     (addresses.length > 1 ? "<p class='additional'>Toggle Additional Practices</p>" : "") +
+                    "</div>" +
                   "</div>";
     returnStr += "<div class='outer-extra-address-container'>";
   for (let i = 1; i < addresses.length; i++) {
 
     returnStr += ("<div class=address-container>" +
+                    "<div class='middle'>" +
                     "<p class='details'><span class='title'>Practice name:</span> " + addresses[i].name + "</p>" +
                     "<p class='details'><span class='title'>Phone:</span> " + addresses[i].phone + "</p>" +
                     (addresses[i].website ? ("<p><a href='" + addresses[i].website + "'>" + addresses[i].website + "</a></p>") : "") +
                     "<p class='details'><span class='title'>Accepting New Patients:</span> " + (addresses[i].accepting ? "Yes" : "No") + "</p>" +
+                    "</div>" +
+                    "<div class='right'>" +
                     "<p>" + addresses[i].street + "</p>" +
                     "<p>" + addresses[i].city + ", " + addresses[i].state + " " + addresses[i].zip + "</p>" +
+                    "</div>" +
                   "</div>");
 
   }
@@ -127,7 +137,7 @@ $(function() {
         outputDoctors(doctorList);
 
         $(".additional").click(function() {
-          $(this).parent().next().toggle();
+          $(this).parent().parent().next().toggle();
         })
 
       }
