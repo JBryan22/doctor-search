@@ -6,8 +6,9 @@ let outputDoctors = function(doctorList) {
   doctorList.forEach(function(doctor) {
     $(".output").append(`<div class="doctor-info-container">
                         <p class="doc-name">${doctor.firstName} ${doctor.lastName}, ${doctor.title}</p>
+                        <p class="special"></span> ${outputSpecialties(doctor.specialties)}</p>
                         <img src=${doctor.image}>
-                        <p>${outputSpecialties(doctor.specialties)}</p>
+
                         ${outputAddresses(doctor.addresses)}
                         </div>`);
   });
@@ -16,23 +17,50 @@ let outputDoctors = function(doctorList) {
 let outputSpecialties = function(specialties) {
   let returnStr = '';
   specialties.forEach(function(specialty) {
-    returnStr += specialty + " ";
+    returnStr += specialty + ", ";
+
   });
+  let i = returnStr.lastIndexOf(',');
+  if (i != -1) {
+    returnStr = returnStr.substr(0, i) + returnStr.substr(i + 1);
+  }
   return returnStr;
 };
 
 let outputAddresses = function(addresses) {
-  let returnStr = '';
-  addresses.forEach(function(address) {
-    returnStr += ("<div class='address-container'>" +
-                "<p>" + address.name + "</p>" +
-                "<p>" + address.phone + "</p>" +
-                (address.website ? ("<p>" + address.website + "</p>") : "") +
-                "<p>Accepting new patients: " + address.accepting + "</p>" +
-                "<p>" + address.street + "</p>" +
-                "<p>" + address.city + ", " + address.state + " " + address.zip + "</p>" +
-                "</div>");
-  });
+  let returnStr = "<div class=first-address>" +
+                    "<p class='details'><span class='title'>Practice name:</span> " + addresses[0].name + "</p>" +
+                    "<p class='details'><span class='title'>Phone:</span> " + addresses[0].phone + "</p>" +
+                    (addresses[0].website ? ("<p><a href='" + addresses[0].website + "'>" + addresses[0].website + "</a></p>") : "") +
+                    "<p class='details'><span class='title'>Accepting New Patients:</span> " + (addresses[0].accepting ? "Yes" : "No") + "</p>" +
+                    "<p>" + addresses[0].street + "</p>" +
+                    "<p>" + addresses[0].city + ", " + addresses[0].state + " " + addresses[0].zip + "</p>" +
+                    (addresses.length > 1 ? "<p class='additional'>Toggle Additional Practices</p>" : "") +
+                  "</div>";
+    returnStr += "<div class='outer-extra-address-container'>";
+  for (let i = 1; i < addresses.length; i++) {
+
+    returnStr += ("<div class=address-container>" +
+                    "<p class='details'><span class='title'>Practice name:</span> " + addresses[i].name + "</p>" +
+                    "<p class='details'><span class='title'>Phone:</span> " + addresses[i].phone + "</p>" +
+                    (addresses[i].website ? ("<p><a href='" + addresses[i].website + "'>" + addresses[i].website + "</a></p>") : "") +
+                    "<p class='details'><span class='title'>Accepting New Patients:</span> " + (addresses[i].accepting ? "Yes" : "No") + "</p>" +
+                    "<p>" + addresses[i].street + "</p>" +
+                    "<p>" + addresses[i].city + ", " + addresses[i].state + " " + addresses[i].zip + "</p>" +
+                  "</div>");
+
+  }
+      returnStr += "</div>"
+  // addresses.forEach(function(address) {
+  //   returnStr += ("<div class='address-container'>" +
+  //               "<p>" + address.name + "</p>" +
+  //               "<p>" + address.phone + "</p>" +
+  //               (address.website ? ("<p>" + address.website + "</p>") : "") +
+  //               "<p>Accepting new patients: " + address.accepting + "</p>" +
+  //               "<p>" + address.street + "</p>" +
+  //               "<p>" + address.city + ", " + address.state + " " + address.zip + "</p>" +
+  //               "</div>");
+  // });
   return returnStr;
 };
 
@@ -40,7 +68,9 @@ $(function() {
   $("#doctor-search").submit(function(event) {
     event.preventDefault();
     let symptom = $("#symptom-type").val();
+    $("#symptom-type").val('')
     let name = $("#doctor-name").val();
+    $("#doctor-name").val('');
     let doctorList = [];
 
     let doctorPromise = new Promise(function(resolve, reject) {
@@ -94,9 +124,12 @@ $(function() {
         let newDoctor = new Doctor(firstName, lastName, title, addresses, image, specialties, uid);
         doctorList.push(newDoctor);
 
-        console.log('got here');
         outputDoctors(doctorList);
-        console.log('got past output');
+
+        $(".additional").click(function() {
+          $(this).parent().next().toggle();
+        })
+
       }
 
     }, function(error) {
