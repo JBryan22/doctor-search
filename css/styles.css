@@ -70,3 +70,7 @@ img {
 .first-address, .address-container {
   vertical-align: top;
 }
+
+strong {
+  color:crimson;
+}

@@ -76,44 +76,37 @@ $(function() {
     $("#location").val('');
     let doctorList = [];
 
-    if (location) {
-      let locatePromise = new Promise(function(resolve, reject) {
-        let request = new XMLHttpRequest();
-        let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${geoApiKey}`;
+    let locatePromise = new Promise(function(resolve, reject) {
+      let request = new XMLHttpRequest();
+      let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${geoApiKey}`;
 
-        request.onload = function() {
-          if(this.status === 200) {
-            resolve(request.response);
-          } else {
-            reject(Error(request.statusText));
-          }
-        };
-        request.open("GET", url, true);
-        request.send();
-      });
+      request.onload = function() {
+        if(this.status === 200) {
+          resolve(request.response);
+        } else {
+          reject(Error(request.statusText));
+        }
+      };
+      request.open("GET", url, true);
+      request.send();
+    });
 
-      locatePromise.then(function(response) {
-        let geoBody = JSON.parse(response);
-        let latitude = geoBody.results[0].geometry.location.lat;
-        let longitude = geoBody.results[0].geometry.location.lng;
-        let locationStr = `${latitude},${longitude},10`;
+    locatePromise.then(function(response) {
+      let geoBody = JSON.parse(response);
+      let latitude = geoBody.results[0].geometry.location.lat;
+      let longitude = geoBody.results[0].geometry.location.lng;
+      let locationStr = `${latitude},${longitude},10`;
 
-        doctorPromiseSearch(locationStr);
+      doctorPromiseSearch(locationStr);
 
-      }, function(error) {
-        $(".output").text(`There was an error with GoogleMaps Geolocation! ${error.message}`);
-      });
-    } else {
-      doctorPromiseSearch('');
-    }
-
+    }, function(error) {
+      $(".output").text(`There was an error with GoogleMaps Geolocation! ${error.message}`);
+    });
 
     let doctorPromiseSearch = function(locationStr) {
       let doctorPromise = new Promise(function(resolve, reject) {
           let request = new XMLHttpRequest();
-          let url = `https://api.betterdoctor.com/2016-03-01/doctors?location=${locationStr}&query=${symptom}&name=${name}&user_key=${apiKey}`;
-
-          console.log(url);
+          let url = `https://api.betterdoctor.com/2016-03-01/doctors?location=${locationStr}&query=${symptom}&name=${name}&limit=50&user_key=${apiKey}`;
 
           request.onload = function() {
             if(this.status === 200) {
@@ -152,10 +145,12 @@ $(function() {
           }
           let image = body.data[i].profile.image_url;
           let specialties = [];
-          console.log("special" + body.data[i].specialties[0].name);
-          for (let k = 0; k < body.data[i].specialties.length; k++) {
-            specialties.push(body.data[i].specialties[k].name);
+          if (body.data[i].specialties.length > 0) {
+            for (let k = 0; k < body.data[i].specialties.length; k++) {
+              specialties.push(body.data[i].specialties[k].name);
+            }
           }
+
           let uid = body.data[i].uid;
 
           let newDoctor = new Doctor(firstName, lastName, title, addresses, image, specialties, uid);

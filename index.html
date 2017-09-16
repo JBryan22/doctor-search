@@ -14,14 +14,15 @@
         <h4>All fields are optional, but you should probably fill at least one out!</h4>
         <form id="doctor-search">
           <div class="form-group">
+            <label for="location"><strong>*Required</strong> Location (ex. Seattle or Seattle,WA or 98125):</label>
+            <input class="form-control" id="location" type="text" required>
+
             <label for="symptom-type">Enter a medical issue to see a doctor about: (ex: stomach)</label>
             <input class="form-control" id="symptom-type" type="text">
 
             <label for="doctor-name">Enter the name of a doctor you would like to see: </label>
             <input class="form-control" id="doctor-name" type="text">
 
-            <label for="location">Location (ex. Seattle or Seattle,WA or 98125):</label>
-            <input class="form-control" id="location" type="text">
             <button class="btn btn-success submit-button" type="submit">Search</button>
           </div>
         </form>
